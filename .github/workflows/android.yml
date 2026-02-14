@@ -28,11 +28,11 @@ jobs:
         api-level: 33
         build-tools: 33.0.2
 
-    # 4. Собираем Android APK через Gradle
+    # 4. Собираем APK через глобальный Gradle
     - name: Build APK
-      run: ./gradlew :android:assembleDebug
+      run: gradle :android:assembleDebug
 
-    # 5. Загружаем APK как артефакт (v4)
+    # 5. Загружаем APK как артефакт
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
