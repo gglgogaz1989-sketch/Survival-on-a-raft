@@ -6,25 +6,25 @@ import com.badlogic.gdx.backends.lwjgl3.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.survive.ui.GameUI;
 
 public class Main extends ApplicationAdapter {
 
     SpriteBatch batch;
     Texture tiles;
+    GameUI gameUI;
 
     final int TILE = 15;
 
-    // ID → координаты в tiles.png
     int[][] tileCoords = {
             {0,0},    // 0 пол
             {0,15},   // 1 спавн
             {15,0},   // 2 забор
             {15,15},  // 3 верх
-            {30,0},   // 4 знак
-            {30,15}   // 5 запас
+            {30,0},   // 4 вылеталка урон
+            {30,15}   // 5 вылеталка хил
     };
 
-    // твоя карта меню
     int[][] map = {
             {3,3,3,3,3,3,3,3,3},
             {4,0,0,0,0,0,0,0,2},
@@ -40,6 +40,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         tiles = new Texture("tiles.png");
+        gameUI = new GameUI();
     }
 
     @Override
@@ -47,9 +48,9 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
 
+        // рисуем карту
         for(int y=0;y<map.length;y++){
             for(int x=0;x<map[0].length;x++){
-
                 int id = map[y][x];
                 int sx = tileCoords[id][0];
                 int sy = tileCoords[id][1];
@@ -65,6 +66,9 @@ public class Main extends ApplicationAdapter {
                 );
             }
         }
+
+        // рисуем UI поверх
+        gameUI.render(batch);
 
         batch.end();
     }
